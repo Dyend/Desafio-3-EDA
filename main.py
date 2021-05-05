@@ -1,12 +1,14 @@
 import reader
 import kde_tree
 import sys
+import util
 
-FILE_NAME = 'data/car.data'
+DATA = 'data/car.data'
+ATTRIBUTES = 'data/attributes.json' 
 
 if __name__ == "__main__":
-    cars = reader.read_file(FILE_NAME)
-    for car in cars:
-        print(car)
-        input()
+    cars = reader.read_data_set(DATA)
+    attributes = reader.read_attributes(ATTRIBUTES)
+    encoded_car_list = util.encode_data_set(cars, attributes)
+
     print('Finalizado')
