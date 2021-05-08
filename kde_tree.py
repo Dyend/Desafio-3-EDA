@@ -67,21 +67,24 @@ class KD_Tree:
 
     def add_neighbour(self, node, neighbours, required_amount, distance, nearest_neighbours_set):
         """ Esta funcion hace uso de una priority queue que evalua en orden de izquierda a derecha la tupla ingresada
-            es decir que si dos objetos tienen la misma distancia se prioriza el id
+            es decir que si dos objetos tienen la misma distancia se evalua el id
+
+            el primer parametro ingresado a la priority queue es la distancia en negativo, esto con objetivo
+            de tener invertida la priority queue es decir que la mayor distancia sea remplazada
         """
 
         if not node.identificador in nearest_neighbours_set:
             if neighbours.qsize() < 10:
-                    neighbours.put((distance, node.identificador, node))
+                    neighbours.put((-distance, distance, node.identificador, node))
                     nearest_neighbours_set.add(node.identificador)
             else:
                 # pop last the furthest node and compare
-                furthest_distance, identificador, furthest = neighbours.get()
+                f_distance, furthest_distance, identificador, furthest = neighbours.get()
                 if distance < furthest_distance:
-                    neighbours.put((distance, node.identificador, node))
+                    neighbours.put((-distance, distance, node.identificador, node))
                     nearest_neighbours_set.add(node.identificador)
                 else:
-                    neighbours.put((furthest_distance, identificador, furthest))
+                    neighbours.put((f_distance, furthest_distance, identificador, furthest))
 
     def closer_distance(self, data, p1, p2, neighbours, required_amount, nearest_neighbours_set):
 

@@ -70,7 +70,7 @@ def print_car(identificador, car):
 def print_vecinos(vecinos, cars):
     print('Se encontraron : ', vecinos.qsize(), ' vecinos')
     while not vecinos.empty():
-        distance, identificador, vecino = vecinos.get()
+        d, distance, identificador, vecino = vecinos.get()
         print('Distancia :', distance)
         print_car(identificador, cars[identificador])
 
