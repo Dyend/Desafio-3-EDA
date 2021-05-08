@@ -1,9 +1,11 @@
+from util import euclidean_distance
 
 class Node:
-    def __init__(self, data):
+    def __init__(self, data, identificador):
         self.left_node = None
         self.right_node = None
         self.data = data
+        self.identificador = identificador
 
 class KD_Tree:
 
@@ -12,11 +14,11 @@ class KD_Tree:
         self.nodes_dimension = 1
         self.size = 0
 
-    def insert_node(self, root, data, depth):
+    def insert_node(self, root, data, depth, identificador):
         # Si el nodo de comparacion es vacio
         if root is None:
             # Se crea un nuevo nodo
-            root = Node(data)
+            root = Node(data, identificador)
             # Si el arbol se encuentra vacio entonces se agrega a la raiz
             if self.size == 0:
                 self.root = root
@@ -28,15 +30,17 @@ class KD_Tree:
         dimension = depth % self.nodes_dimension
 
         if data[dimension] < root.data[dimension]:
-            root.left_node = self.insert_node(root.left_node, data, depth + 1)
+            root.left_node = self.insert_node(root.left_node, data, depth + 1, identificador)
         else:
-            root.right_node = self.insert_node(root.right_node, data, depth + 1)
+            root.right_node = self.insert_node(root.right_node, data, depth + 1, identificador)
 
         return root
 
     # inserta un nuevo nodo desde un punto en especifico y retorna la nueva raiz
-    def insert(self, root, data):
-        return self.insert_node(root, data, 0)
+    def insert(self, data, identificador):
+        if self.root is None:
+            self.nodes_dimension = len(data)
+        return self.insert_node(self.root, data, 0, identificador)
     
     # comparacion para ver si un nodo es igual a otro comparando su data
     def are_same(self, node, data):
@@ -60,8 +64,77 @@ class KD_Tree:
         else:
             return self.search_node(root.right, data, depth + 1)
 
-    def search(self, data, root = None):
+    def add_neighbour(self, node, neighbours, required_amount, distance, nearest_neighbours_set):
+        """ Esta funcion hace uso de una priority queue que evalua en orden de izquierda a derecha la tupla ingresada
+            es decir que si dos objetos tienen la misma distancia se prioriza el id
+        """
+
+        if not node.identificador in nearest_neighbours_set:
+            if neighbours.qsize() < 10:
+                    neighbours.put((distance, node.identificador, node))
+                    nearest_neighbours_set.add(node.identificador)
+            else:
+                # pop last the furthest node and compare
+                furthest_distance, identificador, furthest = neighbours.get()
+                if distance < furthest_distance:
+                    neighbours.put((distance, node.identificador, node))
+                    nearest_neighbours_set.add(node.identificador)
+                else:
+                    neighbours.put((furthest_distance, identificador, furthest))
+
+    def closer_distance(self, data, p1, p2, neighbours, required_amount, nearest_neighbours_set):
+
+        if p1 is None or self.are_same(p1, data):
+            d2 = euclidean_distance(data, p2.data)
+            self.add_neighbour(p2, neighbours, required_amount, d2, nearest_neighbours_set)
+            return p2
+
+        if p2 is None or self.are_same(p2, data):
+            d1 = euclidean_distance(data, p1.data)
+            self.add_neighbour(p1, neighbours, required_amount, d1, nearest_neighbours_set)
+            return p1
+
+        d1 = euclidean_distance(data, p1.data)
+        d2 = euclidean_distance(data, p2.data)
+
+        if d1 < d2:
+            closer = p1
+            distance = d1
+        else:
+            closer = p2
+            distance = d2
+
+        self.add_neighbour(closer, neighbours, required_amount, distance, nearest_neighbours_set)
+
+        return closer
+        
+
+    def get_kd_tree_neighbours(self, quantity, data):
+        nearest_neighbours = PriorityQueue()
+        nearest_neighbours_set = set()
+        kd_tree.nearest_k_neighbours(self.root, data, 0 , nearest_neighbours, quantity, nearest_neighbours_set)
+        return nearest_neighbours
+        
+    def nearest_k_neighbours(self, root, data, depth, neighbours, required_amount, nearest_neighbours_set):
+
         if root is None:
-            root = self.root
-        return self.search_node(data, root, 0)
-    
+            return None
+
+        current_dimension = depth % self.nodes_dimension
+
+        next_branch = None
+        opposite_branch = None
+        if data[current_dimension] < root.data[current_dimension]:
+            next_branch = root.left_node
+            opposite_branch = root.right_node
+        else:
+            next_branch = root.right_node
+            opposite_branch = root.left_node
+
+        node = self.nearest_k_neighbours(next_branch, data, depth + 1, neighbours, required_amount, nearest_neighbours_set)
+        best = self.closer_distance(data, node, root, neighbours, required_amount, nearest_neighbours_set)
+        if best is not None and euclidean_distance(data, best.data) > abs(data[current_dimension] - root.data[current_dimension]):
+            node = self.nearest_k_neighbours(opposite_branch, data, depth + 1, neighbours, required_amount, nearest_neighbours_set)
+            best = self.closer_distance(data, node, best, neighbours, required_amount, nearest_neighbours_set)
+
+        return best

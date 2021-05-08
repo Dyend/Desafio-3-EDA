@@ -1,11 +1,11 @@
 
 {
     "buying":[
-            "v-high","high","med","low"
+        "low","med", "high", "v-high"
     ],
     
     "maint":[
-        "v-high", "high", "med", "low"
+        "low","med", "high", "v-high"
     ],
     "doors":[
         "2", "3","4", "5-more"

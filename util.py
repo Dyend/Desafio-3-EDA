@@ -1,6 +1,15 @@
 
 import numpy as np
 
+def normal_encoding(attributes):
+    """Dict with binary encoded vector"""
+    encoded_attributes = dict()
+    for index, attr in enumerate(attributes):
+        attr = attr.replace('-', '')
+        encoded_attributes[attr] = str(index)
+    show_encoding(encoded_attributes)
+    return encoded_attributes
+
 
 def one_hot_encoding(attributes):
     """Dict with binary encoded vector"""
@@ -23,32 +32,50 @@ def show_encoding(encoding_dict):
         print(key, ':', value)
     print('--------')
 
+
 """ 
     attributes is a list with dictionaries
 """ 
 def encode_car(attributes, car):
+    new_car = []
+    
     for index, attr in enumerate(car):
         # Replace car attribute in index position with attribute encoded
-        car[index] = attributes[index][attr]
-    """ remove acceptability attr"""
-    car.pop()
-    return np.asarray(car)
+        #car[index] = attributes[index][attr]
+        for a in attributes[index][attr]:
+            new_car.append(int(a))
+    return np.asarray(new_car)
     
-def encode_data_set(cars, attributes):
-    buying_categories = one_hot_encoding(attributes['buying'])
-    maint = one_hot_encoding(attributes['maint'])
-    doors_categories = one_hot_encoding(attributes['doors'])
-    persons_categories = one_hot_encoding(attributes['persons'])
-    lug_boot_categories = one_hot_encoding(attributes['lug_boot'])
-    safety_categories = one_hot_encoding(attributes['safety'])
-    acceptability_categories = one_hot_encoding(attributes['acceptability'])
-    attributes_encoded = [buying_categories, maint, doors_categories,
-                          persons_categories, lug_boot_categories, safety_categories, acceptability_categories]
+def encode_data_set(cars, attributes_encoded):
+
     encoded_car_list = []
     for car in cars:
-        print('car ', car)
-        # attr order buying, maint, doors, persons, lug_boot, safety
+        """ remove acceptability attr (last attr)"""
+        car.pop()
         encoded_car = encode_car(attributes_encoded, car)
-        print('encoded car ', encoded_car)
+        #input()
         encoded_car_list.append(encoded_car)
     return encoded_car_list
+
+
+def print_car(identificador, car):
+    print('id: ', identificador)
+    print('buying: ', car[0])
+    print('maint: ', car[1])
+    print('doors: ', car[2])
+    print('persons: ', car[3])
+    print('lug_boot: ', car[4])
+    print('safety: ', car[5])
+
+def print_vecinos(vecinos, cars):
+    print('Se encontraron : ', nearest_neighbours.qsize(), ' vecinos')
+    input()
+    while not vecinos.empty():
+        distance, identificador, vecino = vecinos.get()
+        print('Distancia :', distance)
+        print_car(identificador, cars[identificador])
+
+    input('Enter para continuar')
+
+def euclidean_distance(vector1, vector2):
+    return np.sqrt(np.sum((vector1 - vector2)**2))
