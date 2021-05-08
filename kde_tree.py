@@ -1,4 +1,5 @@
 from util import euclidean_distance
+from queue import PriorityQueue
 
 class Node:
     def __init__(self, data, identificador):
@@ -112,7 +113,7 @@ class KD_Tree:
     def get_kd_tree_neighbours(self, quantity, data):
         nearest_neighbours = PriorityQueue()
         nearest_neighbours_set = set()
-        kd_tree.nearest_k_neighbours(self.root, data, 0 , nearest_neighbours, quantity, nearest_neighbours_set)
+        self.nearest_k_neighbours(self.root, data, 0 , nearest_neighbours, quantity, nearest_neighbours_set)
         return nearest_neighbours
         
     def nearest_k_neighbours(self, root, data, depth, neighbours, required_amount, nearest_neighbours_set):

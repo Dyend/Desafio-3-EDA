@@ -3,7 +3,7 @@ from kde_tree import KD_Tree
 import sys
 import util
 import os
-from queue import PriorityQueue
+
 
 DATA = 'data/car.data'
 ATTRIBUTES = 'data/attributes.json' 

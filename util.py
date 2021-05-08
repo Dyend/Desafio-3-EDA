@@ -68,8 +68,7 @@ def print_car(identificador, car):
     print('safety: ', car[5])
 
 def print_vecinos(vecinos, cars):
-    print('Se encontraron : ', nearest_neighbours.qsize(), ' vecinos')
-    input()
+    print('Se encontraron : ', vecinos.qsize(), ' vecinos')
     while not vecinos.empty():
         distance, identificador, vecino = vecinos.get()
         print('Distancia :', distance)
