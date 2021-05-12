@@ -54,18 +54,17 @@ def c(kd_tree, attributes_encoded, attributes):
     data = []
     for index, key in enumerate(attributes):
         length_attributes = len(attributes_encoded[index])
-        selected_attr_index = None
-        while selected_attr_index is None or not (selected_attr_index >= 0 and selected_attr_index < length_attributes):
+        selected_attr = None
+        while selected_attr is None or not selected_attr in attributes_encoded[index]:
             screen_clear()
             print('Seleccione un atributo de ' + key)
-            for sub_index, attr in enumerate(attributes_encoded[index]):
-                print(sub_index, '- ', attr)
+            for attr in attributes_encoded[index]:
+                print(attr)
             try:
-                selected_attr_index = int(input())
-                attribute = attr
+                selected_attr = input('Escriba el nombre del atributo: ')
             except:
                 pass
-        data.append(int(attributes_encoded[index][attribute]))
+        data.append(int(attributes_encoded[index][selected_attr]))
     nearest_neighbours = kd_tree.get_kd_tree_neighbours(10, data)
     util.print_vecinos(nearest_neighbours, cars)
 
