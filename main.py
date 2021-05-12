@@ -42,16 +42,18 @@ def a(cars):
 
 def b(kd_tree, cars, attributes_encoded):
     id_auto = select_car(cars)
-    util.print_car(id_auto, cars[id_auto])
-    input('Presione enter para continuar.')
     screen_clear()
     data = util.encode_car(attributes_encoded, cars[id_auto])
     nearest_neighbours = kd_tree.get_kd_tree_neighbours(10, data)
+    print('Las caracteristicas del auto son: ')
+    util.print_car(id_auto, cars[id_auto])
+    print('------------------------------------------------------------------------------------------------------------------------')
     util.print_vecinos(nearest_neighbours, cars)
 
 def c(kd_tree, attributes_encoded, attributes):
     """ lista con los atributos a buscar"""
     data = []
+    car = []
     for index, key in enumerate(attributes):
         length_attributes = len(attributes_encoded[index])
         selected_attr = None
@@ -64,8 +66,13 @@ def c(kd_tree, attributes_encoded, attributes):
                 selected_attr = input('Escriba el nombre del atributo: ')
             except:
                 pass
+        car.append(selected_attr)
         data.append(int(attributes_encoded[index][selected_attr]))
     nearest_neighbours = kd_tree.get_kd_tree_neighbours(10, data)
+    screen_clear()
+    print('Las caracteristicas del auto son: ')
+    util.print_car('', car)
+    print('----------------------------------------------------------------------------------------------------------------------------------')
     util.print_vecinos(nearest_neighbours, cars)
 
 def options(kd_tree, cars, attributes_encoded, attributes):

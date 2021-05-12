@@ -71,6 +71,7 @@ def print_vecinos(vecinos, cars):
     print('Se encontraron : ', vecinos.qsize(), ' vecinos')
     while not vecinos.empty():
         d, distance, identificador, vecino = vecinos.get()
+        print('-----------------')
         print('Distancia :', distance)
         print_car(identificador, cars[identificador])
 
