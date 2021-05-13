@@ -10,6 +10,8 @@ Para poder lograr lo anterior utilizamos el KD-Tree, el cual es una estructura d
 
 # Coevaluación
 
+no utilizaremos puntuación para cada integrante, solo aspectos positivos y negativos.
+
 |Criterio                 | Jose Luis Alonso | Juan Pablo Raab | Diego Acosta |
 |-------------------------|------------------|-----------------|----------------|
 |Asistencia y puntualidad |Asiste con puntualidad a todas las reuniones |Asiste con puntualidad a todas las reuniones |Asiste con puntualidad a todas las reuniones |
@@ -20,5 +22,4 @@ Para poder lograr lo anterior utilizamos el KD-Tree, el cual es una estructura d
 |Aspectos postivos |Demuestra entusiasmo y aporta buenas ideas | Encuentra errores poco evidentes y aporta soluciones a estos | Posee un amplio conocimiento de las herramientas utilizadas durante el trabajo, las cuales comparte con el grupo |
 |Aspectos a mejorar | Avanza demasiado rápido, debe intentar esperar al grupo | Debe familiarizarse con las herramientas de programación, a veces pierde un poco de tiempo en la instalación de estas.  | Debe aportar mas codificando en una próxima entrega, no solo aportar con ideas y solucionar problemas |
 
-- Seleccionar sodoku desde: https://www.sudoku-online.org/
-- Link al video: https://drive.google.com/file/d/1ZEuAsBY0VOLxk_di_aFcyyZlnIvOiAgk/view?usp=sharing
+- Link al video: https://drive.google.com/file/d/1bEN5Lv70CMR4DGACZAuX78FYZktf_xw2/view?usp=sharing
