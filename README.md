@@ -2,7 +2,7 @@
 
 # Problema a solucionar
 
-Se pide encontrar, dentro de un dataset de 1800 autos, los 10 autos que mas similitudes tengan con el auto. Se deben implementar 3 tipos de busquedas: ingresar la id de un auto para mostrar su información, ingresar la id de un auto para encontrar los 10 mas parecidos en caracteristicas y finalmente ingresar cada una de las caracteristicas del auto para encontrar los 10 autos que más se parezcan en lo ingresado.
+Se pide encontrar, dentro de un dataset de 1800 autos, los 10 autos que mas similitudes tengan con un auto que se seleccione como referencia. Se deben implementar 3 tipos de busquedas: ingresar la id de un auto para mostrar su información, ingresar la id de un auto para encontrar los 10 mas parecidos en caracteristicas y finalmente ingresar cada una de las caracteristicas del auto para encontrar los 10 autos que más se parezcan en lo ingresado.
 
 # Solución implementada
 
